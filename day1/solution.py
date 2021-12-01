@@ -4,7 +4,7 @@ import sys
 
 def run():
     if len(sys.argv) < 3:
-        raise ValueError('No arguments provided')
+        raise ValueError('No arguments provided. Usage: solution.py input_file window_size')
 
     filename = sys.argv[1]
     window_size = int(sys.argv[2])
