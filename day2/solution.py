@@ -13,9 +13,10 @@ class Direction(Enum):
     UP = 'up'
 
 
-class Position(NamedTuple):
+class State(NamedTuple):
     horizontal: int = 0
     depth: int = 0
+    aim: int = 0
 
 
 class Delta(NamedTuple):
@@ -33,7 +34,7 @@ def run():
     with open(filename) as file:
         deltas = [parse_delta(line) for line in file.readlines()]
 
-    final_position = reduce(get_final_position, deltas, Position(0, 0))
+    final_position = reduce(get_final_position, deltas, State(0, 0))
     product = final_position.horizontal * final_position.depth
 
     print('The final position is %s' % str(final_position))
@@ -45,14 +46,19 @@ def parse_delta(raw: str) -> Delta:
     return Delta(direction=Direction(tokens[0]), magnitude=int(tokens[1]))
 
 
-def get_final_position(start: Position, delta: Delta) -> Position:
-    print('%s, %s' % (repr(start), repr(delta))) 
+def get_final_position(start: State, delta: Delta) -> State:
     if delta.direction == Direction.FORWARD:
-        return Position(horizontal=start.horizontal + delta.magnitude, depth=start.depth)
+        return State(horizontal=start.horizontal + delta.magnitude, 
+                     depth=start.depth + (delta.magnitude * start.aim), 
+                     aim=start.aim)
     elif delta.direction == Direction.DOWN:
-        return Position(horizontal=start.horizontal, depth=start.depth + delta.magnitude)
+        return State(horizontal=start.horizontal, 
+                     depth=start.depth,
+                     aim=start.aim + delta.magnitude)
     elif delta.direction == Direction.UP:
-        return Position(horizontal=start.horizontal, depth=start.depth - delta.magnitude)
+        return State(horizontal=start.horizontal, 
+                     depth=start.depth,
+                     aim=start.aim - delta.magnitude)
     else:
         raise ValueError('Invalid direction for input delta: %s' % repr(delta))
 
