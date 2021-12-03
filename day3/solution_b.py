@@ -33,13 +33,13 @@ def filter_readings(readings: list[str], fxn) -> Optional[str]:
         if len(filtered_readings) <= 1:
             break
 
-        distribution: defaultdict[dict[int, int]] = defaultdict(dict)
+        distribution: defaultdict[int, dict[int, int]] = defaultdict(dict)
         for reading in filtered_readings:
             for j, bit in enumerate(reading):
                 int_bit = int(bit)
                 distribution[j][int_bit] = distribution[j].get(int_bit, 0) + 1
 
-        modal_bits: dict[int, int] = dict()
+        modal_bits: dict[int, Optional[int]] = dict()
 
         for j in range(0, len(distribution)):
             subdistribution = distribution[j]
