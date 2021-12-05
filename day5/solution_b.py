@@ -104,7 +104,6 @@ def populate_board(lines):
                 else:
                     board[min_x + delta][max_y - delta] = board[min_x + delta][max_y - delta] + 1
 
-    breakpoint()
     return board
 
 if __name__ == '__main__':
