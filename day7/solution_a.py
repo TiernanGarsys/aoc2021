@@ -14,7 +14,7 @@ def run():
     with open(filename) as f:
         positions = [int(p) for p in f.read().split(',')] 
 
-    costs = [functools.reduce(lambda a, p: a + abs(pos - p), positions, 0) for pos in positions]
+    costs = [functools.reduce(lambda a, p: a + abs(pos - p), positions, 0) for pos in range(max(positions))]
     print('The answer is %i' % min(costs))
 
 if __name__ == '__main__':
