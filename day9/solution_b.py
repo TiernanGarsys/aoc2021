@@ -60,17 +60,17 @@ def in_basin(heightmap, p, basin):
     neighbors = get_neighbors(heightmap, p)
     height = heightmap[p[0]][p[1]]
 
-    not_peak = height != 9
-    uphill_of_basin = any(is_higher(heightmap, p, n) and n in basin for n in neighbors)
-    lower_than_neighbors = all(is_lower(heightmap, p, n) or n in basin for n in neighbors)
-
-    return height != 9 and (uphill_of_basin or lower_than_neighbors)
+    return height != 9 and (uphill_of_basin(heightmap, p, basin) or lower_than_neighbors(heightmap, p))
 
 
 def lower_than_neighbors(heightmap, p):
     neighbors = get_neighbors(heightmap, p)
     return all(is_lower(heightmap, p, n) for n in neighbors)
 
+
+def uphill_of_basin(heightmap, p, basin):
+    neighbors = get_neighbors(heightmap, p)
+    return any(is_higher(heightmap, p, n) and n in basin for n in neighbors)
 
 def get_neighbors(heightmap, p):
     potential_neighbors = [(p[0]+1, p[1]), (p[0]-1, p[1]), (p[0], p[1]+1), (p[0], p[1]-1)]
