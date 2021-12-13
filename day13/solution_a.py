@@ -47,6 +47,28 @@ def run():
 
         points = folded_points
 
+    max_x = 0
+    max_y = 0
+    for p in points:
+        print(p)
+        if p.x > max_x:
+            max_x = p.x
+        if p.y > max_y:
+            max_y = p.y
+
+    output = []
+    for y in range(max_y+1): 
+        row = []
+        output.append(row)
+        for x in range(max_x+1):
+            if (x, y) in points:
+                row.append('#')
+            else:
+                row.append('.')
+   
+    for row in output:
+        print(''.join(row))
+
     print('The answer is %i' % len(points))
 
 
