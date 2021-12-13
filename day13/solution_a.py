@@ -1,10 +1,9 @@
-# Advent of Code 2021, Day 12, Solution A
+# Advent of Code 2021, Day 13, Solution A
 
 import sys
 
-from collections import defaultdict, namedtuple
+from collections import namedtuple
 from enum import Enum
-from functools import reduce
 
 class Axis(Enum):
     VERTICAL = 'x'
