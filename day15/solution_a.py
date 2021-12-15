@@ -16,13 +16,13 @@ def run():
     with open(filename) as file:
         board = [[int(c) for c in line.strip()] for line in file.readlines()]
     
-    visited = set()
     distances = defaultdict(lambda: sys.maxsize) 
     destination = Point(x=len(board)-1, y=len(board[0])-1)
     current = Point(x=0, y=0)
     distances[current] = 0
     potential_currents = set([current])
 
+    visited = set()
     while current != destination:
         neighbors = get_unvisited_neighbors(current, board, visited)
 
