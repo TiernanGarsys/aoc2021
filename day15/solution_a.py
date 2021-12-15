@@ -16,14 +16,14 @@ def run():
     with open(filename) as file:
         board = [[int(c) for c in line.strip()] for line in file.readlines()]
     
-    visited = []
+    visited = set()
     distances = defaultdict(lambda: sys.maxsize) 
     destination = Point(x=len(board)-1, y=len(board[0])-1)
     current = Point(x=0, y=0)
     distances[current] = 0
     potential_currents = set([current])
 
-    while current:
+    while current != destination:
         neighbors = get_unvisited_neighbors(current, board, visited)
 
         for n in neighbors:
@@ -32,12 +32,8 @@ def run():
             if distance_to_neighbor < distances[n]:
                 distances[n] = distance_to_neighbor
 
-        visited.append(current)
+        visited.add(current)
         potential_currents.remove(current)
-
-        if current == destination:
-            break
-
         current = get_next_current(potential_currents, visited, distances)
 
     print('The answer is %i' % distances[destination])
@@ -57,6 +53,7 @@ def get_next_current(potential_currents, visited, distances):
 def get_unvisited_neighbors(p, board, visited):
     neighbors = [Point(x=p.x+1, y=p.y), Point(x=p.x-1, y=p.y), Point(x=p.x, y=p.y-1), Point(x=p.x, y=p.y+1)]
     return [c for c in neighbors if in_bounds(c, board) and c not in visited]
+
 
 def in_bounds(p, board):
     return p.x >= 0 and p.y >= 0 and p.x < len(board) and p.y < len(board[p.x])
