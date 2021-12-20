@@ -1,4 +1,4 @@
-# Advent of Code 2021, Day 20, Solution A
+# Advent of Code 2021, Day 20, Solution
 
 import sys
 
